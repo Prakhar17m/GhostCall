@@ -4,7 +4,7 @@ A real-time chat and video call application built using **Socket.IO**, inspired 
 
 ## 🔗 Live Demo
 
-👉 [Click here to try the live app](https://your-live-deployment-link.com)
+👉 [Click here to try the live app](https://omegle-web.onrender.com/)
 
 > _Note: Make sure to allow camera and microphone access for the video call feature to work properly._
 
@@ -30,6 +30,18 @@ A real-time chat and video call application built using **Socket.IO**, inspired 
 
 ---
 
+
+
+## 🙌 Acknowledgements
+
+- Inspired by [Omegle](https://www.omegle.com/)
+- Real-time communication powered by [Socket.IO](https://socket.io/)
+- Video calling enabled via [WebRTC](https://webrtc.org/)
+
+---
+
+
+  
 ## 📁 Project Structure
 
 
@@ -49,10 +61,3 @@ npm install
 
 # Start the server
 node server.js
-## 🙌 Acknowledgements
-
-- Inspired by [Omegle](https://www.omegle.com/)
-- Real-time communication powered by [Socket.IO](https://socket.io/)
-- Video calling enabled via [WebRTC](https://webrtc.org/)
-
----
