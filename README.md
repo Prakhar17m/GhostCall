@@ -4,7 +4,7 @@ A real-time chat and video call application built using **Socket.IO**, inspired 
 
 ## 🔗 Live Demo
 
-👉 [Click here to try the live app](https://omegle-web.onrender.com/)
+👉 [Click here to try the live app](https://omegle-web.onrender.com)
 
 > _Note: Make sure to allow camera and microphone access for the video call feature to work properly._
 
