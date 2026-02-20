@@ -1,4 +1,4 @@
-# Omegle Clone 🎥💬
+# GhostCall🎥💬
 
 A real-time chat and video call application built using **Socket.IO**, inspired by **Omegle**, allowing users to connect randomly and communicate instantly with strangers.
 
