@@ -4,14 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat</title>
+    <title>Chat | Gostcall</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         #videos {
             display: grid;
             grid-template-columns: 1fr;
@@ -20,7 +18,7 @@
         }
 
         .video-player {
-            background-color: black;
+            background-color: #f1f5f9;
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -28,118 +26,160 @@
 
         .smallFrame {
             position: fixed;
-            bottom: 100px;
+            bottom: 120px;
             right: 20px;
-            height: 170px;
-            width: 300px;
-            border-radius: 6px;
+            height: 160px;
+            width: 240px;
+            border-radius: 1rem;
             z-index: 10;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
         #controls {
             position: fixed;
-            bottom: 20px;
+            bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            gap: 1em;
+            gap: 1.5em;
+            z-index: 50;
         }
 
         .control-container {
-            background-color: #6df966;
-            padding: 20px;
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .control-container:hover {
+            background: #ffffff;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
         }
 
         .control-container svg {
-            height: 30px;
-            width: 30px;
+            height: 24px;
+            width: 24px;
+            fill: #64748b;
         }
 
-        #leave-btn {
-            background-color: rgb(255, 80, 80, 1);
+        #hangup {
+            background: rgba(244, 63, 94, 0.1);
+            border-color: rgba(244, 63, 94, 0.2);
+        }
+        
+        #hangup:hover {
+            background: rgba(244, 63, 94, 0.2);
+        }
+
+        #hangup svg {
+            fill: #f43f5e;
         }
 
         @media screen and (max-width: 600px) {
             .smallFrame {
-                height: 80px;
-                width: 120px;
-            }
-
-            .control-container img {
-                height: 20px;
-                width: 20px;
+                height: 100px;
+                width: 150px;
+                bottom: 140px;
             }
         }
     </style>
-    <link href="/css/style.css" rel="stylesheet">
 </head>
 
-<body class="flex flex-col h-dvh bg-gray-200">
+<body class="flex flex-col h-screen overflow-hidden">
     <%- include('partials/header') %>
-        <div class="fixed videoblock hidden z-[222] w-full h-svh">
+
+    <div class="flex flex-1 overflow-hidden relative">
+        <!-- Video Overlay (Initially Hidden) -->
+        <div class="fixed videoblock hidden z-[100] w-full h-full bg-slate-50">
             <div id="videos">
                 <video class="video-player" id="localVideo" autoplay muted playsinline></video>
                 <video class="video-player" id="remoteVideo" autoplay playsinline></video>
             </div>
             <div id="controls">
-                <div class="control-container" id="cameraButton">
-                    <svg width="21" height="14" viewBox="0 0 21 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M20.525 2.149C20.365 2.05 20.183 2 20 2C19.847 2 19.694 2.035 19.553 2.105L17 3.382V3C17 1.346 15.654 0 14 0H3C1.346 0 0 1.346 0 3V11C0 12.654 1.346 14 3 14H14C15.654 14 17 12.654 17 11V10.618L19.553 11.894C19.694 11.965 19.847 12 20 12C20.183 12 20.365 11.95 20.525 11.851C20.82 11.668 21 11.347 21 11V3C21 2.653 20.82 2.332 20.525 2.149ZM5 8.5C4.171 8.5 3.5 7.829 3.5 7C3.5 6.171 4.171 5.5 5 5.5C5.829 5.5 6.5 6.171 6.5 7C6.5 7.829 5.829 8.5 5 8.5Z"
-                            fill="white" />
-                    </svg>
+                <div class="control-container" id="cameraButton" title="Toggle Camera">
+                    <svg viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
                 </div>
 
-                <div class="control-container" id="hangup">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path d="M0 0h24v24H0z" fill="red" />
-                        <path
-                            d="M20 15.5c-.78 0-1.55-.3-2.12-.88l-1.43-1.42a4.007 4.007 0 0 0-5.54 0l-1.43 1.42A2.983 2.983 0 0 1 4 15.5c-.78 0-1.55-.3-2.12-.88A2.983 2.983 0 0 1 1 12.5a2.983 2.983 0 0 1 .88-2.12l7-7a4.007 4.007 0 0 1 5.54 0l7 7c.58.58.88 1.34.88 2.12s-.3 1.55-.88 2.12c-.58.58-1.34.88-2.12.88z" />
-                    </svg>
+                <div class="control-container" id="hangup" title="End Call">
+                    <svg viewBox="0 0 24 24"><path d="M12 9c-1.6 0-3.15.25-4.6.72v3.1c0 .39-.23.74-.56.9-.98.49-1.87 1.12-2.66 1.85-.18.18-.43.28-.7.28-.28 0-.53-.11-.71-.29L.29 13.08a.984.984 0 0 1 0-1.4C2.7 9.25 6.44 7 10.5 7s7.8 2.25 10.21 4.68c.39.39.39 1.02 0 1.41L18.13 15.6c-.18.18-.43.29-.71.29s-.53-.11-.7-.28c-.79-.74-1.69-1.36-2.67-1.85-.33-.16-.56-.5-.56-.9v-3.1C12.15 9.25 10.6 9 12 9z"/></svg>
                 </div>
 
-                <div class="control-container" id="micButton">
-                    <svg width="20" height="20" viewBox="0 0 14 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" clip-rule="evenodd"
-                            d="M7 12.5C8.7 12.5 10 11.2 10 9.5V3.5C10 1.8 8.7 0.5 7 0.5C5.3 0.5 4 1.8 4 3.5V9.5C4 11.2 5.3 12.5 7 12.5ZM12.3 9.5C12.3 12.5 9.8 14.6 7 14.6C4.2 14.6 1.7 12.5 1.7 9.5H0C0 12.9 2.7 15.7 6 16.2V19.5H8V16.2C11.3 15.7 14 12.9 14 9.5H12.3Z"
-                            fill="white" />
-                    </svg>
+                <div class="control-container" id="micButton" title="Toggle Mic">
+                    <svg viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/><path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
                 </div>
             </div>
         </div>
-        <div id="incoming-call"
-            class="fixed hidden z-[222] w-full h-dvh bg-gray-900 bg-opacity-75 flex items-center justify-center">
-            <div class="bg-white p-8 rounded-md text-center">
-                <p class="mb-4">Incoming Call...</p>
-                <button id="accept-call" class="bg-green-500 text-white py-2 px-4 rounded-md">Accept</button>
-                <button id="reject-call" class="bg-red-500 text-white py-2 px-4 rounded-md ml-2">Reject</button>
+
+        <!-- Incoming Call Modal -->
+        <div id="incoming-call" class="fixed hidden z-[200] inset-0 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
+            <div class="glass-card max-w-sm w-full text-center animate-slide-up bg-white">
+                <div class="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse">
+                    <svg class="w-10 h-10 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold mb-2 text-slate-900">Incoming Call</h3>
+                <p class="text-slate-500 mb-8">Someone wants to video chat with you!</p>
+                <div class="flex gap-4">
+                    <button id="reject-call" class="flex-1 px-6 py-3 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 transition-colors">Decline</button>
+                    <button id="accept-call" class="flex-1 px-6 py-3 rounded-xl bg-primary text-white hover:bg-primary-dark transition-colors shadow-lg shadow-primary/20">Accept</button>
+                </div>
             </div>
         </div>
-        <main class="flex-1 p-4 overflow-y-auto relative" id="message-container">
-            <div
-                class="text-zinc-400 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2/3 text-center nobody">
-                bhagwaan kasam koi nahi hai yaha, ruko shaayad koi
-                aajaye.</div>
-        </main>
-        <form id="chatform" class="bg-white p-4 flex">
-            <input type="hidden" id="userid" value="">
-            <input type="text" id="messagebox"
-                class="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                placeholder="Type a message">
-            <button type="submit"
-                class="ml-2 bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700">Send</button>
-        </form>
-        <video id="local-video" class="hidden" autoplay></video>
-        <video id="remote-video" class="hidden" autoplay></video>
 
-        <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"
-            integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO"
-            crossorigin="anonymous"></script>
+        <!-- Main Chat Area -->
+        <div class="flex-1 flex flex-col min-w-0 bg-transparent">
+            <main class="flex-1 p-6 overflow-y-auto space-y-4 custom-scrollbar" id="message-container">
+                <div class="text-slate-400 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2/3 text-center nobody animate-pulse-soft">
+                    <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                    Waiting for someone to join...
+                </div>
+            </main>
+
+            <div class="p-4 bg-white/80 backdrop-blur-md border-t border-slate-100">
+                <form id="chatform" class="max-w-4xl mx-auto flex items-center gap-3">
+                    <input type="hidden" id="userid" value="">
+                    <div class="flex-1 relative">
+                        <input type="text" id="messagebox"
+                            class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/50 text-slate-800 placeholder-slate-400 transition-all"
+                            placeholder="Type a message...">
+                    </div>
+                    <button type="submit"
+                        class="bg-primary hover:bg-primary-dark text-white p-4 rounded-2xl transition-all shadow-lg shadow-primary/10 active:scale-95 group">
+                        <svg class="w-6 h-6 transform group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                        </svg>
+                    </button>
+                    <button type="button" id="video-call-btn" 
+                        class="bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-600 p-4 rounded-2xl transition-all active:scale-95">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                        </svg>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <video id="local-video" class="hidden" autoplay></video>
+    <video id="remote-video" class="hidden" autoplay></video>
+
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+
+
 
         <script>
             const socket = io();
@@ -169,40 +209,42 @@
 
             function attachMessage(message) {
                 const userMessageContainer = document.createElement('div');
-                userMessageContainer.classList.add('flex', 'my-2', 'justify-end');
+                userMessageContainer.classList.add('flex', 'justify-end', 'animate-slide-up');
 
                 const userMessageDiv = document.createElement('div');
-                userMessageDiv.classList.add('bg-blue-500', 'text-white', 'p-3', 'rounded-lg', 'max-w-xs');
+                userMessageDiv.classList.add('chat-bubble-user', 'max-w-[80%]', 'md:max-w-[60%]');
 
                 const userMessageText = document.createElement('p');
+                userMessageText.classList.add('text-sm', 'md:text-base', 'leading-relaxed');
                 userMessageText.textContent = message;
 
                 userMessageDiv.appendChild(userMessageText);
-
                 userMessageContainer.appendChild(userMessageDiv);
-
                 document.getElementById('message-container').appendChild(userMessageContainer);
 
-                document.querySelector("#message-container").scrollTop = document.querySelector("#message-container").scrollHeight;
+                const container = document.querySelector("#message-container");
+                container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
             }
 
             function receiveMessage(message) {
                 const messageContainer = document.createElement('div');
-                messageContainer.classList.add('flex', 'my-2', 'justify-start');
+                messageContainer.classList.add('flex', 'justify-start', 'animate-slide-up');
 
                 const messageDiv = document.createElement('div');
-                messageDiv.classList.add('bg-gray-300', 'text-gray-800', 'p-3', 'rounded-lg', 'max-w-xs');
+                messageDiv.classList.add('chat-bubble-remote', 'max-w-[80%]', 'md:max-w-[60%]');
 
                 const messageText = document.createElement('p');
+                messageText.classList.add('text-sm', 'md:text-base', 'leading-relaxed');
                 messageText.textContent = message;
 
                 messageDiv.appendChild(messageText);
-
                 messageContainer.appendChild(messageDiv);
-
                 document.getElementById('message-container').appendChild(messageContainer);
-                document.querySelector("#message-container").scrollTop = document.querySelector("#message-container").scrollHeight;
+
+                const container = document.querySelector("#message-container");
+                container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
             }
+
 
             // WEBRTC START
             let localStream;

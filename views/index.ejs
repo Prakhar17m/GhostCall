@@ -4,16 +4,50 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Omegle Clone</title>
+  <title>Gostcall | Connect Humanly</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link href="/css/style.css" rel="stylesheet">
 </head>
 
-<body class="flex items-center justify-center h-screen bg-gray-200">
-  <div class="bg-white flex items-center flex-col p-8 rounded-lg shadow-md w-full max-w-xs">
-    <h1 class="text-2xl font-bold mb-4 text-center">Welcome to Omegle Clone</h1>
-    <a href="/chat" class="w-full text-center bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700">Start
-      Chat</a>
+<body class="flex items-center justify-center min-h-screen">
+  <div class="relative w-full max-w-4xl px-4 animate-slide-up">
+    <!-- Decorative blobs (subtle for light mode) -->
+    <div class="absolute -top-24 -left-24 w-64 h-64 bg-primary/5 rounded-full blur-3xl animate-float"></div>
+    <div class="absolute -bottom-24 -right-24 w-64 h-64 bg-secondary/5 rounded-full blur-3xl animate-float" style="animation-delay: -3s;"></div>
+
+    <div class="glass-card flex flex-col items-center text-center py-20 px-8 relative z-10 border-white/80">
+      <div class="w-20 h-20 bg-gradient-to-br from-primary to-primary-dark rounded-2xl mb-8 flex items-center justify-center shadow-lg shadow-primary/20 transform rotate-12">
+        <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"></path>
+        </svg>
+      </div>
+      
+      <h1 class="text-5xl md:text-6xl font-bold mb-6 text-slate-900 tracking-tight">
+        Talk to people, <br><span class="text-primary italic">authentically.</span>
+      </h1>
+      
+      <p class="text-xl text-slate-500 mb-10 max-w-xl leading-relaxed">
+        Gostcall is a human-first platform to meet interesting people from around the world. No bots, just real conversations.
+      </p>
+      
+      <a href="/chat" class="btn-premium text-lg group px-12">
+        Join a Room
+        <span class="inline-block ml-2 transition-transform group-hover:translate-x-1">→</span>
+      </a>
+      
+      <div class="mt-12 flex items-center gap-8 text-slate-400 text-sm font-medium">
+        <div class="flex items-center gap-2">
+          <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+          <span>Active Community</span>
+        </div>
+        <span>•</span>
+        <span>Secure & Private</span>
+      </div>
+    </div>
   </div>
 </body>
 
-</html>
+
+</html>

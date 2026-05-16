@@ -1,5 +1,19 @@
-<header class="bg-white shadow p-4 flex justify-between items-center">
-    <h1 class="text-xl font-bold">Chat</h1>
-    <button id="video-call-btn" class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">Video
-        Call</button>
+<header class="bg-white/80 backdrop-blur-md border-b border-slate-100 px-8 py-4 flex justify-between items-center z-50">
+    <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-gradient-to-br from-primary to-primary-dark rounded-lg flex items-center justify-center shadow-md">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"></path>
+            </svg>
+        </div>
+        <h1 class="text-xl font-bold tracking-tight text-slate-900">Gostcall <span class="text-primary text-[10px] uppercase tracking-widest ml-1 font-bold">Beta</span></h1>
+    </div>
+    
+    <div class="flex items-center gap-6">
+        <div class="hidden md:flex items-center gap-2 text-slate-400 text-sm font-medium">
+            <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+            Real-time Network
+        </div>
+        <a href="/" class="text-slate-500 hover:text-slate-900 transition-colors text-sm font-semibold">End Session</a>
+    </div>
 </header>
+
